@@ -64,7 +64,7 @@ for time, info in sorted_records.items():
 
     if "wakes" in log:
         start_minute = start_time.minute
-        end_minute = time.minute - 1
+        end_minute = time.minute #  originally tried this value minus 1 but for some reason that didn't yield the right answer
 
         for m in range(start_minute, end_minute):
             if m not in sleep_map[current_guard]:
@@ -85,39 +85,14 @@ for guard, time_map in sleep_map.items():
 print "Sleepiest guard:", sleepiest_guard
 print "Time spent sleeping:", max_slept_time
 
+max_slept_minute = -1
 max_slept_time = -1
-target_minute = 0
 
-for minute, time_spent in sleep_map[guard].items():
+for minute, time_spent in sleep_map[sleepiest_guard].items():
     if time_spent >= max_slept_time:
         max_slept_time = time_spent
-        target_minute = minute
+        max_slept_minute = minute
 
-print "Slept most during minute:", target_minute
+print "Minute slept the most:", max_slept_minute
 
-# generate checksum
-checksum = int(sleepiest_guard[1:]) * int(target_minute)
-
-print "Checksum:", checksum
-
-# alternative calculation
-# find the guard that slept the most on a given minute
-
-sleepiest_minute = 0
-max_slept_time = 0
-
-for guard, time_map in sleep_map.items():
-    for minute, sleep_time in time_map.items():
-        if sleep_time >= max_slept_time:
-            max_slept_time = sleep_time
-            sleepiest_minute = minute
-            sleepiest_guard = guard
-
-print "Alternative sleepiest guard:", sleepiest_guard
-print "Alternative sleepiest minute:", sleepiest_minute
-print "Time spent:", max_slept_time
-
-# checksum
-checksum = int(sleepiest_guard[1:]) * int(sleepiest_minute)
-
-print "Checksum:", checksum
+print "Checksum:", int(sleepiest_guard[1:]) * max_slept_minute
