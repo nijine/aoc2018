@@ -96,3 +96,24 @@ for minute, time_spent in sleep_map[sleepiest_guard].items():
 print "Minute slept the most:", max_slept_minute
 
 print "Checksum:", int(sleepiest_guard[1:]) * max_slept_minute
+
+
+# Part 2
+print "\n"
+
+
+# find the guard asleep the most on a given minute
+
+max_time_spent = -1
+minute_slept_on = -1
+target_guard = ""
+
+for guard, time_map in sleep_map.items():
+    for minute, time_spent in time_map.items():
+        if time_spent > max_time_spent:
+            max_time_spent = time_spent
+            minute_slept_on = minute
+            target_guard = guard
+
+print "Guard", target_guard, "spent a lot of time sleeping during minute", minute_slept_on
+print "Checksum:", int(target_guard[1:]) * minute_slept_on
