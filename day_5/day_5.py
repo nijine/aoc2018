@@ -1,27 +1,26 @@
 #!/usr/bin/env python
 # Part 1
 
-test_string = 'aAbBccDd'
-last = ''
-final = ''
+input_string = ""
 
-# testing
-#for s in test_string:
-#    if last in '':
-#        last = s
-#        continue
-#
-#    print "Difference between", s, last, abs(ord(s) - ord(last))
-#    last = s
+with open('input') as f:
+    input_string = f.read()
 
-print "Starting string:", test_string
+# actual number of characters is 1 less than len(string) (excludes the \0)
+print "Starting string length:", len(input_string) - 1
 
-for i in xrange(1, len(test_string)):
-    if i - 1 >= 0 and i + 1 < len(test_string):
-        if abs(ord(test_string[i-1]) - ord(test_string[i])) == 32:
-            # this pair gets removed
-            test_string = test_string[:i-1] + test_string[i+1:]
+changesMade = True
 
-print "Final string:", test_string
+while changesMade:
+    changesMade = False
+    for i in xrange(1, len(input_string) - 1):
+        if i - 1 >= 0 and len(input_string) > i:
+            if abs(ord(input_string[i-1]) - ord(input_string[i])) == 32:
+                # this pair gets removed
+                if i + 1 == len(input_string):
+                    input_string = input_string[:i-1]
+                else:
+                    input_string = input_string[:i-1] + input_string[i+1:]
+                changesMade = True
 
-# on the right track, just need to continue making changes until there aren't any changes left to make
+print "Final string:", input_string, "Length:", len(input_string) - 1
